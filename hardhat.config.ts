@@ -42,4 +42,9 @@ export default defineConfig({
       accounts: [configVariable("MONAD_TESTNET_PRIVATE_KEY")],
     },
   },
+  verify: {
+    etherscan: {
+      apiKey: configVariable("ETHERSCAN_API_KEY"),
+    },
+  },
 });

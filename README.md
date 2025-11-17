@@ -1,6 +1,6 @@
 # Sample Hardhat 3 Beta Project (`node:test` and `viem`)
 
-This project showcases a Hardhat 3 Beta project using the native Node.js test runner (`node:test`) and the `viem` library for Monad Mainnet/Testnet interactions.
+This project showcases a Hardhat 3 Beta project using the native Node.js test runner (`node:test`) and the `viem` library for Monad Testnet interactions.
 
 To learn more about the Hardhat 3 Beta, please visit the [Getting Started guide](https://hardhat.org/docs/getting-started#getting-started-with-hardhat-3). To share your feedback, join our [Hardhat 3 Beta](https://hardhat.org/hardhat3-beta-telegram-group) Telegram group or [open an issue](https://github.com/NomicFoundation/hardhat/issues/new) in our GitHub issue tracker.
 
@@ -30,9 +30,9 @@ npx hardhat test solidity
 npx hardhat test nodejs
 ```
 
-### Make a deployment to Monad Mainnet/Testnet
+### Make a deployment to Monad Testnet
 
-This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain or to Monad Mainnet/Testnet.
+This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain or to Monad Testnet.
 
 To run the deployment to a local chain:
 
@@ -40,18 +40,18 @@ To run the deployment to a local chain:
 npx hardhat ignition deploy ignition/modules/Counter.ts
 ```
 
-To run the deployment to Monad Mainnet/Testnet, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `MONAD_MAINNET_PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
+To run the deployment to Monad Testnet, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
 
-You can set the `MONAD_MAINNET_PRIVATE_KEY` variable using the `hardhat-keystore` plugin or by setting it as an environment variable.
+You can set the `PRIVATE_KEY` variable using the `hardhat-keystore` plugin or by setting it as an environment variable.
 
-To set the `MONAD_MAINNET_PRIVATE_KEY` config variable using `hardhat-keystore`:
+To set the `PRIVATE_KEY` config variable using `hardhat-keystore`:
 
 ```shell
-npx hardhat keystore set MONAD_MAINNET_PRIVATE_KEY
+npx hardhat keystore set PRIVATE_KEY
 ```
 
-After setting the variable, you can run the deployment with the Monad Mainnet/Testnet:
+After setting the variable, you can run the deployment with the Monad Testnet:
 
 ```shell
-npx hardhat ignition deploy --network monadMainnet ignition/modules/Counter.ts
+npx hardhat ignition deploy ignition/modules/Counter.ts --network monadTestnet --verify
 ```

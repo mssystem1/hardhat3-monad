@@ -28,6 +28,13 @@ export default defineConfig({
     }
   },
   verify: {
+    blockscout: {
+      enabled: false,
+    },
+    etherscan: {
+      enabled: true,
+      apiKey: ETHERSCAN_API_KEY,
+    },
     sourcify: {
       enabled: true,
       apiUrl: "https://sourcify-api-monad.blockvision.org",

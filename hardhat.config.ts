@@ -34,5 +34,17 @@ export default defineConfig({
       url: configVariable("SEPOLIA_RPC_URL"),
       accounts: [configVariable("SEPOLIA_PRIVATE_KEY")],
     },
+    monadMainnet: {
+      type: "http",
+      chainType: "l1",
+      url: configVariable("MONAD_MAINNET_RPC_URL"),
+      accounts: [configVariable("MONAD_MAINNET_PRIVATE_KEY")],
+    },
+    monadTestnet: {
+      type: "http",
+      chainType: "l1",
+      url: configVariable("MONAD_TESTNET_RPC_URL"),
+      accounts: [configVariable("MONAD_TESTNET_PRIVATE_KEY")],
+    },
   },
 });

@@ -32,7 +32,7 @@ export default defineConfig({
       enabled: false,
     },
     etherscan: {
-      enabled: true,
+      enabled: false,
       apiKey: ETHERSCAN_API_KEY,
     },
     sourcify: {

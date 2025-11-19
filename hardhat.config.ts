@@ -3,7 +3,6 @@ import { defineConfig } from "hardhat/config";
 import "dotenv/config";
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
-const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "";
 
 export default defineConfig({
   plugins: [hardhatToolboxViemPlugin],
@@ -27,17 +26,22 @@ export default defineConfig({
       chainId: 10143,
     }
   },
-  verify: {
-    blockscout: {
-      enabled: false,
+  sourcify: {
+    enabled: false,
+  },
+  etherscan: {
+    apiKey: {
+      monadTestnet: "no-api-key-needed"
     },
-    etherscan: {
-      enabled: false,
-      apiKey: ETHERSCAN_API_KEY,
-    },
-    sourcify: {
-      enabled: true,
-      apiUrl: "https://sourcify-api-monad.blockvision.org",
-    }
+    customChains: [
+      {
+        network: "monadTestnet",
+        chainId: 10143,
+        urls: {
+          apiURL: "https://testnet.monadscan.com/api",
+          browserURL: "https://testnet.monadscan.com"
+        }
+      }
+    ]
   }
 });

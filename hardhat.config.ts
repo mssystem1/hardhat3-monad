@@ -24,24 +24,24 @@ export default defineConfig({
       url: "https://testnet-rpc.monad.xyz",
       accounts: [PRIVATE_KEY],
       chainId: 10143,
+    },
+    monadMainnet: {
+      type: "http",
+      url: "https://rpc.monad.xyz",
+      accounts: [PRIVATE_KEY],
+      chainId: 143,
     }
   },
-  sourcify: {
-    enabled: false,
-  },
-  etherscan: {
-    apiKey: {
-      monadTestnet: "no-api-key-needed"
+  verify: {
+    blockscout: {
+      enabled: false,
     },
-    customChains: [
-      {
-        network: "monadTestnet",
-        chainId: 10143,
-        urls: {
-          apiURL: "https://testnet.monadscan.com/api",
-          browserURL: "https://testnet.monadscan.com"
-        }
-      }
-    ]
+    etherscan: {
+      enabled: false,
+    },
+    sourcify: {
+      enabled: true,
+      apiUrl: "https://sourcify-api-monad.blockvision.org",
+    }
   }
 });

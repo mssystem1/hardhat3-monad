@@ -30,15 +30,19 @@ npx hardhat test solidity
 npx hardhat test nodejs
 ```
 
-### Make a deployment to Monad Testnet
+### Deployment
 
-This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain or to Monad Testnet.
+This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain, Monad Testnet, or Monad Mainnet.
+
+#### Deploy to Local Chain
 
 To run the deployment to a local chain:
 
 ```shell
 npx hardhat ignition deploy ignition/modules/Counter.ts
 ```
+
+#### Deploy to Monad Testnet
 
 To run the deployment to Monad Testnet, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
 
@@ -50,8 +54,30 @@ To set the `PRIVATE_KEY` config variable using `hardhat-keystore`:
 npx hardhat keystore set PRIVATE_KEY
 ```
 
-After setting the variable, you can run the deployment with the Monad Testnet:
+After setting the variable, you can run the deployment to Monad Testnet:
 
 ```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts --network monadTestnet --verify
+npx hardhat ignition deploy ignition/modules/Counter.ts --network monadTestnet
+```
+
+To verify the deployed contract on Monad Testnet:
+
+```shell
+npx hardhat verify <CONTRACT_ADDRESS> --network monadTestnet
+```
+
+#### Deploy to Monad Mainnet
+
+To run the deployment to Monad Mainnet, ensure you have set your `PRIVATE_KEY` as described above.
+
+Deploy to Monad Mainnet:
+
+```shell
+npx hardhat ignition deploy ignition/modules/Counter.ts --network monadMainnet
+```
+
+To verify the deployed contract on Monad Mainnet:
+
+```shell
+npx hardhat verify <CONTRACT_ADDRESS> --network monadMainnet
 ```

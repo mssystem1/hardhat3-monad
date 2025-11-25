@@ -1,83 +1,148 @@
-# Sample Hardhat3 Project (`node:test` and `viem`)
+# Monad Fortune Cookies AI · Hardhat 3 + Ignition
 
-This project showcases a Hardhat3 project using the native Node.js test runner (`node:test`) and the `viem` library for Monad Testnet interactions.
+[![Solidity](https://img.shields.io/badge/Solidity-0.8.x-363636?logo=solidity)](https://soliditylang.org/)
+[![Hardhat](https://img.shields.io/badge/Hardhat-3.x-ffcc00?logo=hardhat)](https://hardhat.org/)
+[![Network](https://img.shields.io/badge/Network-Monad_Mainnet-7b3fe4)](https://monad.xyz/)
+[![License](https://img.shields.io/badge/License-MIT-informational)](#license)
 
-To learn more about Hardhat3, please visit the [Getting Started guide](https://hardhat.org/docs/getting-started#getting-started-with-hardhat-3). To share your feedback, join our [Hardhat3](https://hardhat.org/hardhat3-beta-telegram-group) Telegram group or [open an issue](https://github.com/NomicFoundation/hardhat/issues/new) in our GitHub issue tracker.
+This repository contains a minimal, production-ready setup for deploying and verifying the **`FortuneCookiesAI`** ERC-721 contract on **Monad mainnet** using:
 
-## Project Overview
+- **Hardhat 3**  
+- **Hardhat Ignition (viem)** for deployment  
+- **MonadScan + Sourcify** for verification  
+- **OpenZeppelin Contracts** for ERC-721, royalties, etc.
 
-This example project includes:
+Deployed & verified example:
 
-- A simple Hardhat configuration file.
-- Foundry-compatible Solidity unit tests.
-- TypeScript integration tests using [`node:test`](nodejs.org/api/test.html), the new Node.js native test runner, and [`viem`](https://viem.sh/).
-- Examples demonstrating how to connect to different types of networks, including locally simulating OP mainnet.
+> **Monad Mainnet**  
+> `FortuneCookiesAI` at  
+> `0x6AcADd703eE8D45F97bff72609290B0463D6566e`  
+> Constructor arg: `"image/png"`
 
-## Usage
+---
 
-### Running Tests
+## Table of Contents
 
-To run all the tests in the project, execute the following command:
+1. [Project Structure](#project-structure)  
+2. [Requirements](#requirements)  
+3. [Installation](#installation)  
+4. [Environment Variables](#environment-variables)  
+5. [Hardhat Configuration](#hardhat-configuration)  
+6. [Compilation](#compilation)  
+7. [Deployment with Ignition](#deployment-with-ignition)  
+8. [Verification on MonadScan](#verification-on-monadscan)  
+9. [Useful Commands](#useful-commands)  
+10. [Notes & Gotchas](#notes--gotchas)  
+11. [License](#license)
 
-```shell
-npx hardhat test
-```
+---
 
-You can also selectively run the Solidity or `node:test` tests:
+## Project Structure
 
-```shell
-npx hardhat test solidity
-npx hardhat test nodejs
-```
+Core files relevant to Monad deployment:
 
-### Deployment
+```text```
+.
+├─ contracts/
+│  └─ FortuneCookiesAI.sol         # NFT contract
+├─ ignition/
+│  └─ modules/
+│     └─ FortuneCookiesAI.ts       # Ignition deployment module
+├─ params/
+│  └─ fortuneCookiesAI.json        # Deployment parameters for Ignition
+├─ hardhat.config.ts               # Hardhat 3 config (Monad networks + verify)
+├─ package.json
+├─ tsconfig.json
+├─ .gitignore
+└─ README.md
 
-This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain, Monad Testnet, or Monad Mainnet.
+## Requirements
 
-#### Deploy to Local Chain
+** Node.js ≥ 18.x** 
 
-To run the deployment to a local chain:
+** npm or pnpm or yarn** 
 
-```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts
-```
+** A funded Monad mainnet EOA private key (MON for gas)** 
 
-#### Deploy to Monad Testnet
+** An Etherscan API key (used via Monad’s Etherscan v2 integration)** 
 
-To run the deployment to Monad Testnet, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
+## Installation
 
-You can set the `PRIVATE_KEY` variable using the `hardhat-keystore` plugin or by setting it as an environment variable.
+Clone the repo and install dependencies:
+git clone https://github.com/YOUR_USERNAME/monad-fortune-cookies-hardhat3.git
+cd monad-fortune-cookies-hardhat3
 
-To set the `PRIVATE_KEY` config variable using `hardhat-keystore`:
+npm install
+or: pnpm install
 
-```shell
-npx hardhat keystore set PRIVATE_KEY
-```
+## Environment Variables
 
-After setting the variable, you can run the deployment to Monad Testnet:
+Create a .env file in the project root:
 
-```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts --network monadTestnet
-```
+PRIVATE_KEY=0xyour_monad_mainnet_private_key
+ETHERSCAN_API_KEY=your_etherscan_api_key
 
-To verify the deployed contract on Monad Testnet:
+PRIVATE_KEY – the deployer wallet for Monad networks
 
-```shell
-npx hardhat verify <CONTRACT_ADDRESS> --network monadTestnet
-```
+ETHERSCAN_API_KEY – standard Etherscan v2 API key (Monad uses it under the hood)
 
-#### Deploy to Monad Mainnet
+⚠️ Do not commit .env – it’s ignored via .gitignore.
 
-To run the deployment to Monad Mainnet, ensure you have set your `PRIVATE_KEY` as described above.
+## Hardhat Configuration
 
-Deploy to Monad Mainnet:
+hardhat.config.ts is configured for:
 
-```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts --network monadMainnet
-```
+**Solidity 0.8.x with optimizer enabled**
 
-To verify the deployed contract on Monad Mainnet:
+**Hardhat network (edr-simulated)**
 
-```shell
-npx hardhat verify <CONTRACT_ADDRESS> --network monadMainnet
-```
+**Monad Testnet (chainId: 10143)**
+
+**Monad Mainnet (chainId: 143)**
+
+**Built-in Hardhat 3 verification via:**
+
+	Etherscan v2 API (MonadScan)
+
+	Sourcify (MonadVision)
+
+## Compilation
+
+To compile all contracts:
+`npx hardhat build`
+
+Artifacts are created under artifacts/ and cache/.
+
+## Deploy to Monad Mainnet
+
+To deploy FortuneCookiesAI to Monad Mainnet (chainId 143):
+`npx hardhat ignition deploy ignition/modules/FortuneCookiesAI.ts --network monadMainnet --parameters params/fortuneCookiesAI.json`
+
+## Verification on MonadScan
+
+Once deployed, you can verify the contract on MonadScan (via Etherscan v2) and Sourcify with a single command.
+
+Example: Verify FortuneCookiesAI
+
+`npx hardhat verify 0xyour_smart_contract "image/png" --network monadMainnet`
+
+## Notes & Gotchas
+
+**Windows + Ignition parameters**
+The --parameters flag expects a path to a JSON file, not inline JSON.
+Using a file (like params/fortuneCookiesAI.json) avoids quoting issues on Windows shells.
+
+**Do not commit secrets**
+
+.env contains your private key and API key
+
+**It’s ignored via .gitignore by default**
+
+Multiple networks
+The same project can deploy to both monadTestnet and monadMainnet using the same Ignition module; just switch --network.
+
+## License
+
+This project is licensed under the MIT License.
+You’re free to use, modify, and distribute it as part of your own Monad / DeFi / NFT infrastructure.
+
